@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View, Text, TextInput, Appearance, SafeAreaView } from 'react-native';
 import TestText from './screens/TestText';
+import LoadingOverlay from './shared/components/LoadingOverlay';
 
 // DISABLE FONT SCALING
 // maxFontSizeMultiplier can be alternative in future
@@ -55,6 +56,7 @@ function App() {
                 {/* <NewAppScreen templateFileName="App.tsx" /> */}
                 <View style={{width:10, height: 34, backgroundColor: 'gold', position: 'absolute'}}></View>
                 <TestText/>
+                <LoadingOverlay/>
             </View>
         </SafeAreaView>
     );

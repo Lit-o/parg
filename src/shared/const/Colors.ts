@@ -18,6 +18,7 @@ const COLORS = {
       ERROR: "#FF4757",
       SUCCESS: "#2ED573",
       WARNING: "#FFA502",
+      WAITING: "#FFAF5f"
     },
     BACKGROUNDS: {
       LIGHT: "#F9FBFD",
