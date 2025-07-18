@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View, Text, TextInput, Appearance, SafeAreaView } from 'react-native';
 import TestText from './screens/TestText';
 import LoadingOverlay from './shared/components/LoadingOverlay';
+import AppScreens from './screens/AppScreens';
 
 // DISABLE FONT SCALING
 // maxFontSizeMultiplier can be alternative in future
@@ -54,9 +55,7 @@ function App() {
                 {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
                 <StatusBar barStyle={'light-content'} />
                 {/* <NewAppScreen templateFileName="App.tsx" /> */}
-                <View style={{width:10, height: 34, backgroundColor: 'gold', position: 'absolute'}}></View>
-                <TestText/>
-                <LoadingOverlay/>
+                <AppScreens/>
             </View>
         </SafeAreaView>
     );
@@ -64,7 +63,6 @@ function App() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop:20,
         flex: 1,
     },
 });
