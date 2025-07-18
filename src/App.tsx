@@ -1,8 +1,6 @@
 // import { NewAppScreen } from '@react-native/new-app-screen';
 import { useEffect } from 'react';
-import { StatusBar, StyleSheet, useColorScheme, View, Text, TextInput, Appearance, SafeAreaView } from 'react-native';
-import TestText from './screens/TestText';
-import LoadingOverlay from './shared/components/LoadingOverlay';
+import { StatusBar, StyleSheet, useColorScheme, View, Appearance, SafeAreaView } from 'react-native';
 import AppScreens from './screens/AppScreens';
 
 // DISABLE FONT SCALING
