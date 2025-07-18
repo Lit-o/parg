@@ -103,6 +103,19 @@ const COLORS = {
 export default COLORS;
 
 
+
+// DS
+// TypeScript, как мне вывести единый литеральный тип со всеми значениями такого вложенного объекта 
+
+// Рекурсивный тип для извлечения значений
+type NestedValueOf<T> = T extends object
+  ? { [K in keyof T]: NestedValueOf<T[K]> }[keyof T]
+  : T;
+
+// Получение типа всех значений
+export type ColorType = NestedValueOf<typeof COLORS>;
+
+
 // Theme case
 // type Theme = "light" | "dark";
 
