@@ -23,7 +23,7 @@ const COLORS = {
       LIGHT: "#F9FBFD",
       DARK: "#1E272E",
     },
-  } as const;
+} as const;
   
 export default COLORS;
 
