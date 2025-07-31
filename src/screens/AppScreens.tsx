@@ -3,12 +3,17 @@ import React, { useState } from 'react'
 import LogIn from './LogIn'
 
 export default function AppScreens() {
-    const [counter, setCounter] = useState(0)
+
+    const [isSignedIn, setIsSignedIn] = useState(false)
 
     return (
         <View style={styles.container}>
-            <Text>Counter: {counter}</Text>
-            <LogIn />
+            {isSignedIn ? <Text style={styles.loginText}>Login</Text> :
+                <>
+                    <Text style={styles.loginText}>Sign Up</Text>
+                    <LogIn onLogin={() => setIsSignedIn(true)} />
+                </>
+            }
         </View>
     )
 }
@@ -17,5 +22,10 @@ export default function AppScreens() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    loginText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
     },
 });
