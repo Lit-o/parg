@@ -1,7 +1,37 @@
-// import { NewAppScreen } from '@react-native/new-app-screen';
 import { useEffect } from 'react';
 import { StatusBar, StyleSheet, useColorScheme, View, Appearance, SafeAreaView } from 'react-native';
 import AppScreens from './screens/AppScreens';
+
+
+
+function App() {
+    // const isDarkMode = useColorScheme() === 'dark';
+    useEffect(() => Appearance.setColorScheme('light'), [])
+
+    return (
+        // SafeAreaView - the safe area boundaries of a device iOS version 11 or later
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
+                <StatusBar  barStyle={'light-content'}
+                            translucent
+                            backgroundColor={'transparent'} />
+                <AppScreens/>
+            </View>
+        </SafeAreaView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
+
+export default App;
+
+
+// Usefull comments
 
 // DISABLE FONT SCALING
 // maxFontSizeMultiplier can be alternative in future
@@ -33,36 +63,8 @@ import AppScreens from './screens/AppScreens';
 
 
 
-
-
-
 // [EXAMPLE] ColorScheme control  for future manual color theme settings
 // const colorScheme = Appearance.getColorScheme();
 // if (colorScheme === 'dark') {
 //   // Use dark color scheme
 // }
-
-function App() {
-    // const isDarkMode = useColorScheme() === 'dark';
-    useEffect(() => Appearance.setColorScheme('light'), [])
-
-    return (
-        // SafeAreaView - the safe area boundaries of a device iOS version 11 or later
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={styles.container}>
-                {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} /> */}
-                <StatusBar barStyle={'light-content'} />
-                {/* <NewAppScreen templateFileName="App.tsx" /> */}
-                <AppScreens/>
-            </View>
-        </SafeAreaView>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
-
-export default App;
