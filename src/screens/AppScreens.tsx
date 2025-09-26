@@ -1,21 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import LogIn from './LogIn'
+import Login from './Login'
 
 
 
 export default function AppScreens() {
-    const [isSignedIn, setIsSignedIn] = useState(false)
+    const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
 
     return (
         <View style={styles.container}>
             {isSignedIn ? 
-                <Text>
-                    After login placeholder
-                </Text> 
+                <View>
+                    <Text>
+                        GO INSIDE APP(TODO first compo after login)
+                    </Text>
+                        <Pressable onPress={() => {
+                            console.log('pressed!')
+                            setIsSignedIn(true)
+                        }}
+                        >
+                        <Text>Login</Text>
+                    </Pressable> 
+                </View>
                 :
                 <>
-                    <LogIn onLogin={() => setIsSignedIn(true)} />
+                    <Login setIsSignedIn={setIsSignedIn} />
                 </>
             }
         </View>

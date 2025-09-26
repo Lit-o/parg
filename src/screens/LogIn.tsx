@@ -1,47 +1,48 @@
+import React, { useState, useEffect, SetStateAction } from 'react'
 import { ImageBackground, Pressable, StyleSheet, View } from 'react-native'
-import { Text, TextInput } from '../shared/hoc/WithFontAutoScaleOff'
-import React, { useState } from 'react'
-import COLORS from '../shared/const/Colors'
+
+import { Text } from '../shared/hoc/WithFontAutoScaleOff'
 import LoadingOverlay from '../shared/components/LoadingOverlay'
+import InputCustomized from '../shared/components/InputCustomized'
+
+import COLORS from '../shared/const/Colors'
 
 
 
-interface LogInProps {
-    onLogin: (username: string, password: string) => void;
+interface LoginProps {
+    setIsSignedIn: React.Dispatch<SetStateAction<boolean>>
 }
 
 
-// TODO inputs to separate Compo with options like secure and custom validations
 
-const LogIn: React.FC<LogInProps> = ({ onLogin }) => {
+const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
+
     // ----- DATA AND STATE -----
     const [isLoading, setIsLoading] = useState(false);
+
     const [username, setUsername] = useState('');
     const [firstPassword, setFirsPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
-    //TODO isFocuset separate to all inputs
-    const [isFocused, setIsFocused] = useState(false);
+
+    const [isValidateUserName, setIsValidateUserName] = useState<boolean | null>(null)
+    const [isValidateFirstPassword, setIsValidateFirstPassword] = useState<boolean | null>(null)
+    const [isValidateSecondPassword, setIsValidateSecondPassword] = useState<boolean | null>(null)
+
+    const [isButtonAble, setIsButtonAble] = useState<boolean | null>(null)
     // ----- END - DATA AND STATE -----
 
 
+    // ----- EFFECTS AND ACTIONS ----- 
+    useEffect(()=>{
+        // setIsSignedIn(prev => !prev)
+    }, [])
+    // ----- END - EFFECTS AND ACTIONS -----
+
+
     // ----- HANDLERS -----
-    const handleLogin = async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-
-        try {
-            // await onLogin(username, password);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const onPressAction = () => {}
-
-    const handleFocus = () => setIsFocused(true);
-    const handleBlur = () => setIsFocused(false);
+    const onPressAction = () => {
+        setIsSignedIn(true)
+    }
     // ----- END - HANDLERS -----
 
 
@@ -68,49 +69,39 @@ const LogIn: React.FC<LogInProps> = ({ onLogin }) => {
             blurRadius={2}>
             <View style={styles.glassCard}>
                 <Text style={{ fontSize: 30, color: COLORS.TEXT.terracottaSoot }}>Login</Text>
-                {/* <LoadingOverlay color={COLORS.COMMON.FIRE_RUST}/> */}
-                {/* <LoadingOverlay color={'#5D7A9E'}/> */}
-                <TextInput
-                    placeholder="Username"
-                    value={username}
-                    onChangeText={setUsername}
 
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    style={[
-                        styles.textInput,
-                        isFocused && styles.inputFocused 
-                    ]}
+                <InputCustomized inputSettings={{
+                    id:1, 
+                    value: username,
+                    placeholder:'Cusomized', 
+                    secure: false, 
+                    validationRule:'spaceless text', 
+                    setValue: setUsername,
+                    setIsValidate: setIsValidateUserName}}
                 />
-                <TextInput
-                    placeholder="First Password"
-                    placeholderTextColor={COLORS.TEXT.terracottaSoot + '99'}
-                    secureTextEntry
-                    value={firstPassword}
-                    onChangeText={setFirsPassword}
 
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    style={[
-                        styles.textInput,
-                        isFocused && styles.inputFocused 
-                    ]}
+                <InputCustomized inputSettings={{
+                    id:2, 
+                    value: firstPassword,
+                    placeholder:'Cusomized', 
+                    secure: true, 
+                    validationRule:'password', 
+                    setValue: setFirsPassword,
+                    setIsValidate: setIsValidateFirstPassword}}
                 />
-                <TextInput
-                    placeholder="Second Password"
-                    placeholderTextColor={COLORS.TEXT.terracottaSoot + '99'}
-                    secureTextEntry
-                    value={secondPassword}
-                    onChangeText={setSecondPassword}
-                    
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    style={[
-                        styles.textInput,
-                        isFocused && styles.inputFocused 
-                    ]}
+
+                <InputCustomized inputSettings={{
+                    id:3, 
+                    value: secondPassword,
+                    placeholder:'Cusomized', 
+                    secure: true, 
+                    validationRule:'password', 
+                    setValue: setSecondPassword,
+                    setIsValidate: setIsValidateSecondPassword}}
                 />
-                <Pressable style={styles.button} onPress={onPressAction}>
+
+
+                <Pressable style={[styles.button, !isButtonAble && styles.buttonDisable]} onPress={onPressAction} disabled={isButtonAble}>
                     <View>
                         <Text style={styles.buttonText}>DONE</Text>
                     </View>
@@ -172,8 +163,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         
         borderRadius: 8,
-        backgroundColor: COLORS.COMMON.WASHED_TEAL + '77',
+        backgroundColor: COLORS.COMMON.WASHED_TEAL,
         paddingHorizontal: 12,
+    },
+    buttonDisable: {
+        backgroundColor: COLORS.COMMON.WASHED_TEAL + '77',
     },
     buttonText: {
         color: COLORS.COMMON.BURNT_GOLD,
@@ -182,4 +176,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LogIn;
+export default Login;
