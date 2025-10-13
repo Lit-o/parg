@@ -60,6 +60,7 @@ const InputCustomized: React.FC<InputCustomizedProps> = ({ inputSettings: { id, 
 const styles = StyleSheet.create({
     textInput: {
         width: 260,
+        marginBottom: 10,
         paddingHorizontal: 12,
         borderWidth: 2,
         borderRadius: 8,
