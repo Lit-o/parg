@@ -9,9 +9,14 @@ import COLORS from '../shared/const/Colors'
 
 
 
-interface LoginProps {
+// --- TYPES ---
+type LoginProps = {
     setIsSignedIn: React.Dispatch<SetStateAction<boolean>>
 }
+type User = {
+    name: string
+}
+// ----- END - TYPES -----
 
 
 
@@ -19,6 +24,10 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
 
     // ----- DATA AND STATE -----
     const [isLoading, setIsLoading] = useState(false);
+
+    const [user, setUser] = useState<User | null>(null)
+    console.log(user?.name)
+
 
     const [username, setUsername] = useState('');
     const [firstPassword, setFirsPassword] = useState('');
@@ -36,6 +45,13 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
     useEffect(()=>{
         // setIsSignedIn(prev => !prev)
     }, [])
+
+    type LocalData = 'on' | 'off'
+    useEffect(()=>{
+        // const previousData = localStorage.getItem('Data') as LocalData
+        // const previousData2 = localStorage.getItem('Data') as unknown as LocalData
+        console.log('1')
+    },[])
     // ----- END - EFFECTS AND ACTIONS -----
 
 
