@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import Login from './Login'
+import Login from './Login.tsx'
 
 
 
