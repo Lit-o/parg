@@ -84,12 +84,12 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
             style={styles.backgroundImage}
             blurRadius={2}>
             <View style={styles.glassCard}>
-                <Text style={{ fontSize: 30, color: COLORS.TEXT.terracottaSoot }}>Login</Text>
+                <Text style={styles.titleText}>Login</Text>
 
                 <InputCustomized inputSettings={{
                     id:1, 
                     value: username,
-                    placeholder:'Cusomized', 
+                    placeholder:'Name', 
                     secure: false, 
                     validationRule:'spaceless text', 
                     setValue: setUsername,
@@ -99,7 +99,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 <InputCustomized inputSettings={{
                     id:2, 
                     value: firstPassword,
-                    placeholder:'Cusomized', 
+                    placeholder:'Password one', 
                     secure: true, 
                     validationRule:'password', 
                     setValue: setFirsPassword,
@@ -109,7 +109,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 <InputCustomized inputSettings={{
                     id:3, 
                     value: secondPassword,
-                    placeholder:'Cusomized', 
+                    placeholder:'Password two', 
                     secure: true, 
                     validationRule:'password', 
                     setValue: setSecondPassword,
@@ -137,6 +137,11 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
 const styles = StyleSheet.create({
     container: {
 
+    },
+    titleText: { 
+        marginBottom: 20,
+        fontSize: 30, 
+        color: COLORS.TEXT.terracottaSoot 
     },
     textInput: {
         width: 260,
