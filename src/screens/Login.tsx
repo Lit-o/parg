@@ -15,6 +15,8 @@ type LoginProps = {
 }
 type User = {
     name: string
+    firstPassword: string
+    secondPassword: string
 }
 // ----- END - TYPES -----
 
@@ -25,10 +27,6 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
     // ----- DATA AND STATE -----
     const [isLoading, setIsLoading] = useState(false);
 
-    const [user, setUser] = useState<User | null>(null)
-    console.log(user?.name)
-
-
     const [username, setUsername] = useState('');
     const [firstPassword, setFirsPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
@@ -37,26 +35,29 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
     const [isValidateFirstPassword, setIsValidateFirstPassword] = useState<boolean | null>(null)
     const [isValidateSecondPassword, setIsValidateSecondPassword] = useState<boolean | null>(null)
 
-    const [isButtonAble, setIsButtonAble] = useState<boolean | null>(null)
+    const [isLoginDataFilledCorrect, setIsLoginDataFilledCorrect] = useState<boolean | null>(null)
     // ----- END - DATA AND STATE -----
 
 
     // ----- EFFECTS AND ACTIONS ----- 
     useEffect(()=>{
-        // setIsSignedIn(prev => !prev)
-    }, [])
-
-    type LocalData = 'on' | 'off'
-    useEffect(()=>{
-        // const previousData = localStorage.getItem('Data') as LocalData
-        // const previousData2 = localStorage.getItem('Data') as unknown as LocalData
-        console.log('1')
-    },[])
+        setIsLoginDataFilledCorrect(isValidateUserName && isValidateFirstPassword && isValidateSecondPassword)
+    }, [isValidateUserName, isValidateFirstPassword, isValidateSecondPassword])
     // ----- END - EFFECTS AND ACTIONS -----
 
 
     // ----- HANDLERS -----
+    const setUserDataSecure = ({name, firstPassword, secondPassword}: User) => {
+        // TODO
+        // Add Keychain
+    }
+
     const onPressAction = () => {
+        setUserDataSecure({
+            name: username,
+            firstPassword: firstPassword,
+            secondPassword: secondPassword
+        })
         setIsSignedIn(true)
     }
     // ----- END - HANDLERS -----
@@ -89,6 +90,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 <InputCustomized inputSettings={{
                     id:1, 
                     value: username,
+                    maxLength: 15,
                     placeholder:'Name', 
                     secure: false, 
                     validationRule:'spaceless text', 
@@ -99,6 +101,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 <InputCustomized inputSettings={{
                     id:2, 
                     value: firstPassword,
+                    maxLength: 15,
                     placeholder:'Password one', 
                     secure: true, 
                     validationRule:'password', 
@@ -109,6 +112,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 <InputCustomized inputSettings={{
                     id:3, 
                     value: secondPassword,
+                    maxLength: 15,
                     placeholder:'Password two', 
                     secure: true, 
                     validationRule:'password', 
@@ -117,7 +121,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
                 />
 
 
-                <Pressable style={[styles.button, !isButtonAble && styles.buttonDisable]} onPress={onPressAction} disabled={isButtonAble}>
+                <Pressable style={[styles.button, !isLoginDataFilledCorrect && styles.buttonDisable]} onPress={onPressAction} disabled={!isLoginDataFilledCorrect}>
                     <View>
                         <Text style={styles.buttonText}>DONE</Text>
                     </View>
@@ -135,32 +139,14 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
     titleText: { 
         marginBottom: 20,
         fontSize: 30, 
         color: COLORS.TEXT.terracottaSoot 
     },
-    textInput: {
-        width: 260,
-        paddingHorizontal: 12,
-        marginTop: 10,
-        borderWidth: 2,
-        borderRadius: 8,
-        borderColor: COLORS.COMMON.WASHED_TEAL + '77',
-        color: COLORS.TEXT.terracottaSoot,
-        fontSize: 16,
-    },
-    inputFocused: {
-        borderColor: COLORS.COMMON.WASHED_TEAL,
-    },
     backgroundImage: {
         padding: 20,
         flex: 1,
-        backgroundColor: COLORS.COMMON.BURNT_GOLD,
-        // height: 244,
         resizeMode: 'cover',
         alignItems: 'center'
     },
@@ -172,6 +158,8 @@ const styles = StyleSheet.create({
         // backgroundColor: COLORS.COMMON.BURNT_GOLD + `DD`,
         backgroundColor: COLORS.COMMON.BURNT_GOLD,
         borderRadius: 20,
+        borderWidth: 1,
+        borderColor: COLORS.COMMON.METALLIC_STEEL,
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -186,12 +174,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: COLORS.COMMON.WASHED_TEAL,
         paddingHorizontal: 12,
+
+        borderWidth: 1,
+        borderColor: COLORS.COMMON.DEEP_NIGHT_BLUE + '55',
+        
     },
     buttonDisable: {
-        backgroundColor: COLORS.COMMON.WASHED_TEAL + '77',
+        backgroundColor: COLORS.COMMON.FADED_CLAY,
     },
     buttonText: {
-        color: COLORS.COMMON.BURNT_GOLD,
+        color: COLORS.COMMON.DEEP_NIGHT_BLUE,
         fontWeight: 700,
         fontSize: 24
     }
