@@ -1,15 +1,19 @@
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ColorType } from '../const/Colors';
+import COLORS from '../const/Colors';
+
+
 
 interface propsType {
-    color: ColorType
+    color?: ColorType
 }
+
 
 
 const LoadingOverlay = ({ color }: propsType) => {
     return (
         <View style={styles.container}>
-            <ActivityIndicator size='large' color={color} />
+            <ActivityIndicator size='large' color={color ? color : COLORS.SYSTEM.smolderingFire} />
         </View>
     );
 };
