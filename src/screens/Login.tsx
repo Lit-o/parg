@@ -5,6 +5,8 @@ import { Text } from '../shared/hoc/WithFontAutoScaleOff'
 import LoadingOverlay from '../shared/components/LoadingOverlay'
 import InputCustomized from '../shared/components/InputCustomized'
 
+import NativeLocalStorage from '../../specs/NativeLocalStorage'
+
 import COLORS from '../shared/const/Colors'
 
 
@@ -27,6 +29,8 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
     // ----- DATA AND STATE -----
     const [isLoading, setIsLoading] = useState(false);
 
+    const [authData, setAuthData] = useState<User | null>(null);
+
     const [username, setUsername] = useState('');
     const [firstPassword, setFirsPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
@@ -40,6 +44,14 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
 
 
     // ----- EFFECTS AND ACTIONS ----- 
+    useEffect(() => { 
+        const storedData = NativeLocalStorage?.getItem('authData')
+        if (typeof storedData === 'string') {
+            setAuthData(JSON.parse(storedData))
+        }
+        console.log('storedValue', storedData)
+    }, [])
+
     useEffect(()=>{
         setIsLoginDataFilledCorrect(isValidateUserName && isValidateFirstPassword && isValidateSecondPassword)
     }, [isValidateUserName, isValidateFirstPassword, isValidateSecondPassword])
@@ -52,8 +64,30 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
         // Add Keychain
     }
 
+    const saveUserDataToPersistentStorage = (User: User) => {
+        NativeLocalStorage?.setItem(JSON.stringify(User), 'authData')
+    }
+
+    const clearAllFromPersistentStorage = () => {
+        NativeLocalStorage?.clear()
+    }
+
+    const deleteTargetValueFromPersistantStorage = (key: string) => {
+        NativeLocalStorage?.removeItem(key)
+    }
+
     const onPressAction = () => {
-        setUserDataSecure({
+        // setUserDataSecure({
+        //     name: username,
+        //     firstPassword: firstPassword,
+        //     secondPassword: secondPassword
+        // })
+        setAuthData({
+            name: username,
+            firstPassword: firstPassword,
+            secondPassword: secondPassword
+        })
+        saveUserDataToPersistentStorage({
             name: username,
             firstPassword: firstPassword,
             secondPassword: secondPassword
@@ -86,6 +120,7 @@ const Login: React.FC<LoginProps> = ({ setIsSignedIn }) => {
             blurRadius={2}>
             <View style={styles.glassCard}>
                 <Text style={styles.titleText}>Login</Text>
+                <Text>Name is - {authData?.name}</Text>
 
                 <InputCustomized inputSettings={{
                     id:1, 
